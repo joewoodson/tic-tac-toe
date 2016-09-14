@@ -21,9 +21,8 @@ class AppComponent extends React.Component {
 
   }
   onTileSelect(tile) {
-    // this.addActiveClass();
-    // console.log('clicked:' + this.props.id);
-    console.log(tile.props.id);
+    // console.log(tile.props.id);
+    tile.setState({ x: true})
   }
   render() {
     let tileList = []

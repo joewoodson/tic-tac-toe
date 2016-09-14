@@ -3,10 +3,18 @@
 import React from 'react';
 
 require('styles//Tile.css');
+var classNames = require('classnames');
 
 class TileComponent extends React.Component {
+  constructor() {
+	  super();
+	  this.state = {
+      x: false
+    };
+	}
   render() {
-    return <div onClick={this.props.onTileSelect.bind(null, this)} className="tile-component">{this.props.id}</div>
+    let tileClassNames = classNames('tile-component', {x: this.state.x});
+    return <div onClick={this.props.onTileSelect.bind(null, this)} className={tileClassNames}></div>
   }
 }
 
