@@ -1,0 +1,15 @@
+.tile-component {
+  border-width: 4px;
+  border-color: slategrey;
+  border-style: solid;
+  width: 150px;
+  height: 150px;
+  display: inline-block;
+  margin-right: -6px;
+}
+
+.x {
+  background-image: url('../images/x.svg');
+  background-repeat: no-repeat;
+  background-position: 50%;
+}

@@ -1,0 +1,29 @@
+/* Base Application Styles */
+body {
+  color: #fff;
+  background: #222;
+}
+
+.index {
+  text-align: center;
+}
+
+.index img {
+  margin: 40px auto;
+  border-radius: 4px;
+  background: #fff;
+  display: block;
+}
+
+.count {
+  margin: 0 auto;
+}
+
+.board {
+  text-align: center;
+  margin-top: 5em;
+}
+
+.red {
+  background: red;
+}
