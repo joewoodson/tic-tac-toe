@@ -6,6 +6,7 @@ import Tile from './TileComponent';
 
 // ToDo
 // -flexbox 3x3 grid
+// -disable tile after click
 // -better symbols
 // -logic for selected tile arrays
 // -check selected tile array for winning combination
