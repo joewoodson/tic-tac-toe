@@ -9,6 +9,7 @@ class TileComponent extends React.Component {
   constructor() {
 	  super();
 	  this.state = {
+      enabled: true,
       x: false,
       o: false
     };

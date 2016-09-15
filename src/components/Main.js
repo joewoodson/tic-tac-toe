@@ -5,11 +5,10 @@ import React from 'react';
 import Tile from './TileComponent';
 
 // ToDo
-// -flexbox 3x3 grid
-// -disable tile after click
-// -better symbols
+// style outside block
 // -logic for selected tile arrays
 // -check selected tile array for winning combination
+// -better symbols
 
 class AppComponent extends React.Component {
   constructor() {
@@ -21,15 +20,20 @@ class AppComponent extends React.Component {
     };
 	}
   onTileSelect(tile) {
-    let activePlayer = tile.props.activePlayer;
+    let activePlayer = this.state.activePlayer;
 
-    tile.setState({ [activePlayer]: true});
-    this.setState({ activePlayer : activePlayer == 'x' ? 'o' : 'x' })
+    if (tile.state.enabled) {
+      tile.setState({ [activePlayer]: true});
+      // alternate activePlayer between x and o after select
+      this.setState({ activePlayer : activePlayer == 'x' ? 'o' : 'x' });
+    }
+    tile.setState({ enabled: false });
+
   }
   render() {
     let tileList = []
     for (let i = 1; i <= 9; i++) {
-      let tile = <Tile onTileSelect={this.onTileSelect.bind(this)} activePlayer={this.state.activePlayer} id={i} key={i}/>;
+      let tile = <Tile onTileSelect={this.onTileSelect.bind(this)} id={i} key={i}/>;
       tileList.push(tile);
     }
 
