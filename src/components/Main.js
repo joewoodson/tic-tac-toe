@@ -10,32 +10,25 @@ class AppComponent extends React.Component {
   constructor() {
 	  super();
 	  this.state = {
-      count: 0,
-      activePlayer: 'x'
+      activePlayer: 'x',
+      xSelected: [],
+      oSelected: []
     };
 	}
-  incrementCount() {
-    this.setState({ count: this.state.count + 1 });
-  }
-  addActiveClass() {
-
-  }
   onTileSelect(tile) {
-    // console.log(tile.props.id);
-    tile.setState({ x: true})
+    let activePlayer = tile.props.activePlayer;
+
+    tile.setState({ [activePlayer]: true});
+    this.setState({ activePlayer : activePlayer == 'x' ? 'o' : 'x' })
   }
   render() {
     let tileList = []
     for (let i = 1; i <= 9; i++) {
-      let tile = <Tile onTileSelect={this.onTileSelect} id={i} key={i}/>;
+      let tile = <Tile onTileSelect={this.onTileSelect.bind(this)} activePlayer={this.state.activePlayer} id={i} key={i}/>;
       tileList.push(tile);
     }
 
     return (
-      // <div className="index">
-      //   <img src={yeomanImage} alt="Yeoman Generator" onClick={this.incrementCount.bind(this)} />
-      //   <div className="count">Count: {this.state.count}</div>
-      // </div>
       <div className="board">
         {tileList}
       </div>

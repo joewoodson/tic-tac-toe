@@ -14,6 +14,8 @@
   background-position: 50%;
 }
 
-.red {
-  background: red;
+.o {
+  background-image: url('../images/o.svg');
+  background-repeat: no-repeat;
+  background-position: 50%;
 }

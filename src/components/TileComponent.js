@@ -9,11 +9,12 @@ class TileComponent extends React.Component {
   constructor() {
 	  super();
 	  this.state = {
-      x: false
+      x: false,
+      o: false
     };
 	}
   render() {
-    let tileClassNames = classNames('tile-component', {x: this.state.x});
+    let tileClassNames = classNames('tile-component', {x: this.state.x}, {o: this.state.o});
     return <div onClick={this.props.onTileSelect.bind(null, this)} className={tileClassNames}></div>
   }
 }
