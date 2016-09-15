@@ -4,7 +4,11 @@ require('styles/App.css');
 import React from 'react';
 import Tile from './TileComponent';
 
-let yeomanImage = require('../images/yeoman.png');
+// ToDo
+// -flexbox 3x3 grid
+// -better symbols
+// -logic for selected tile arrays
+// -check selected tile array for winning combination
 
 class AppComponent extends React.Component {
   constructor() {
