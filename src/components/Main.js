@@ -14,22 +14,43 @@ class AppComponent extends React.Component {
   constructor() {
 	  super();
 	  this.state = {
+      gameState: 'ready',
       activePlayer: 'x',
       xSelected: [],
-      oSelected: []
+      oSelected: [],
+      winnerMessage: ''
     };
 	}
-  hasNum(arr, nums) {
-    let hasNum = true;
+  hasNums(arr, nums) {
+    let hasNums = true;
 
     for (let i = 0; i < nums.length; i++) {
-      if (arr.indexOf(nums[i]) < 0) hasNum = false;
+      if (arr.indexOf(nums[i]) < 0) hasNums = false;
     }
-    return hasNum;
+    return hasNums;
 
   }
-  checkWinner(arr) {
-    if (this.hasNum(arr, [1,2,3])) console.log('winner!');
+  checkWinner(arr, winner) {
+    let winningArrs = [
+      [1,2,3],
+      [4,5,6],
+      [7,8,9],
+      [1,4,7],
+      [2,5,8],
+      [3,6,9],
+      [1,5,9],
+      [3,5,7]
+    ];
+
+    for (let i = 0; i < winningArrs.length; i++) {
+      if (this.hasNums(arr, winningArrs[i])) {
+        this.setState({
+          gameState:  'done',
+          winnerMessage: `${winner} WINS!`
+        });
+      }
+    }
+
   }
   onTileSelect(tile) {
     let activePlayer = this.state.activePlayer;
@@ -39,9 +60,11 @@ class AppComponent extends React.Component {
     if (tile.state.enabled) {
       tile.setState({ [activePlayer]: true});
       // alternate activePlayer between x and o after select
-      this.setState({ activePlayer : activePlayer == 'x' ? 'o' : 'x' });
-      this.setState({ [selectedArr]: newArr });
-      this.checkWinner(newArr);
+      this.setState({
+        activePlayer : activePlayer == 'x' ? 'o' : 'x',
+        [selectedArr]: newArr
+      });
+      this.checkWinner(newArr, activePlayer.toUpperCase());
     }
 
     tile.setState({ enabled: false });
@@ -57,6 +80,9 @@ class AppComponent extends React.Component {
     return (
       <div className="board">
         {tileList}
+        <div className="winner-message">
+          {this.state.winnerMessage}
+        </div>
       </div>
     );
   }

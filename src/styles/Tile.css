@@ -8,10 +8,6 @@
   margin: -8px -5px 0 0;
 }
 
-.tile-component[id=1] {
-  background: red;
-}
-
 .x {
   background-image: url('../images/x.svg');
   background-repeat: no-repeat;
