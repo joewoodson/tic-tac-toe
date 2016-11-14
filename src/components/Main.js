@@ -6,7 +6,6 @@ import Tile from './TileComponent';
 
 // ToDo
 // style grid
-// -check selected tile array for winning combination
 // - DRY!
 // -better symbols
 
@@ -70,6 +69,15 @@ class AppComponent extends React.Component {
     tile.setState({ enabled: false });
 
   }
+  onReset() {
+    this.setState({
+      gameState: 'ready',
+      activePlayer: 'x',
+      xSelected: [],
+      oSelected: [],
+      winnerMessage: ''
+    });
+  }
   render() {
     let tileList = []
     for (let i = 1; i <= 9; i++) {
@@ -82,6 +90,9 @@ class AppComponent extends React.Component {
         {tileList}
         <div className="winner-message">
           {this.state.winnerMessage}
+        </div>
+        <div className="button reset" onClick={this.onReset.bind(this)}>
+          <button>Reset</button>
         </div>
       </div>
     );
