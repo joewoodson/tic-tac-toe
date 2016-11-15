@@ -9,6 +9,7 @@ class AppComponent extends React.Component {
 	  super();
 	  this.state = {
       gameState: 'ready',
+      tileReset: false,
       activePlayer: 'x',
       xSelected: [],
       oSelected: [],
@@ -47,26 +48,34 @@ class AppComponent extends React.Component {
 
   }
   onTileSelect(tile) {
-    let activePlayer = this.state.activePlayer;
-    let selectedArr = this.state.activePlayer + 'Selected';
-    let newArr = this.state[selectedArr].concat(tile.props.id);
+    if (!this.state.tileReset) {
+      let activePlayer = this.state.activePlayer;
+      let selectedArr = this.state.activePlayer + 'Selected';
+      let newArr = this.state[selectedArr].concat(tile.props.id);
 
-    if (tile.state.enabled) {
-      tile.setState({ [activePlayer]: true});
-      // alternate activePlayer between x and o after select
-      this.setState({
-        activePlayer : activePlayer == 'x' ? 'o' : 'x',
-        [selectedArr]: newArr
-      });
-      this.checkWinner(newArr, activePlayer.toUpperCase());
+      if (tile.state.enabled) {
+        tile.setState({ [activePlayer]: true});
+        // alternate activePlayer between x and o after select
+        this.setState({
+          activePlayer : activePlayer == 'x' ? 'o' : 'x',
+          [selectedArr]: newArr
+        });
+        this.checkWinner(newArr, activePlayer.toUpperCase());
+      }
+
+      tile.setState({ enabled: false });
     }
 
-    tile.setState({ enabled: false });
-
+  }
+  onStart() {
+    this.setState({
+      tileReset: false
+    })
   }
   onReset() {
     this.setState({
       gameState: 'ready',
+      tileReset: true,
       activePlayer: 'x',
       xSelected: [],
       oSelected: [],
@@ -76,7 +85,7 @@ class AppComponent extends React.Component {
   render() {
     let tileList = []
     for (let i = 1; i <= 9; i++) {
-      let tile = <Tile onTileSelect={this.onTileSelect.bind(this)} id={i} key={i}/>;
+      let tile = <Tile onTileSelect={this.onTileSelect.bind(this)} tileReset={this.state.tileReset} id={i} key={i}/>;
       tileList.push(tile);
     }
 
@@ -88,6 +97,9 @@ class AppComponent extends React.Component {
         </div>
         <div className="button reset" onClick={this.onReset.bind(this)}>
           <button>Reset</button>
+        </div>
+        <div className="button start" onClick={this.onStart.bind(this)}>
+          <button>Start</button>
         </div>
       </div>
     );
