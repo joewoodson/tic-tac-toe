@@ -48,7 +48,7 @@ class AppComponent extends React.Component {
 
   }
   onTileSelect(tile) {
-    if (!this.state.tileReset) {
+    if (!this.state.tileReset && this.state.gameState !== 'done') {
       let activePlayer = this.state.activePlayer;
       let selectedArr = this.state.activePlayer + 'Selected';
       let newArr = this.state[selectedArr].concat(tile.props.id);
