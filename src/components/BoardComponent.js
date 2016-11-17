@@ -1,5 +1,5 @@
 require('normalize.css/normalize.css');
-require('styles/App.css');
+require('styles/Board.css');
 
 import React from 'react';
 import Tile from './TileComponent';
@@ -95,11 +95,11 @@ class AppComponent extends React.Component {
         <div className="winner-message">
           {this.state.winnerMessage}
         </div>
-        <div className="button reset" onClick={this.onReset.bind(this)}>
-          <button>Reset</button>
+        <div className="button-container" onClick={this.onStart.bind(this)}>
+          <button className="start">Start</button>
         </div>
-        <div className="button start" onClick={this.onStart.bind(this)}>
-          <button>Start</button>
+        <div className="button-container" onClick={this.onReset.bind(this)}>
+          <button className="reset">Reset</button>
         </div>
       </div>
     );

@@ -1,3 +1,48 @@
-.board-component {
-  border: 1px dashed #f00;
+/* Base Application Styles */
+body {
+  color: #fff;
+  background: #222;
+}
+
+.winner-message {
+  color: #fff;
+  font-weight: bold;
+  font-size: 70px;
+  position: absolute;
+  top: 265px;
+  left: 0;
+  width: 100%;
+}
+
+.board {
+  text-align: center;
+  margin: 5em auto 0 auto;
+  width: 460px;
+}
+
+.button-container {
+  display: inline;
+  margin: 10px 15px 0 0;
+  float: left;
+}
+
+button {
+  margin-bottom: 15px;
+  display: inline;
+  border: none;
+  background: slategrey;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 10px 30px;
+  border-radius: 3px;
+}
+
+.button.start {
+  /*float: left;*/
+}
+
+.button.reset {
+  /*float: right;*/
 }
