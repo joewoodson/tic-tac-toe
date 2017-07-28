@@ -47,30 +47,32 @@ class AppComponent extends React.Component {
     }
 
   }
-  onTileSelect(tile) {
+  onTileSelect(id) {
     if (!this.state.tileReset && this.state.gameState !== 'done') {
       let activePlayer = this.state.activePlayer;
       let selectedArr = this.state.activePlayer + 'Selected';
-      let newArr = this.state[selectedArr].concat(tile.props.id);
+      let newArr = this.state[selectedArr].concat(id);
 
-      if (tile.state.enabled) {
-        tile.setState({ [activePlayer]: true});
+      // if (tile.state.enabled) {
+        // tile.setState({ [activePlayer]: true});
+        this.setState({ [`${activePlayer}Selected`]: this.state.oSelected.concat(id) })
         // alternate activePlayer between x and o after select
         this.setState({
           activePlayer : activePlayer == 'x' ? 'o' : 'x',
           [selectedArr]: newArr
         });
         this.checkWinner(newArr, activePlayer.toUpperCase());
-      }
+      // }
 
-      tile.setState({ enabled: false });
+      // tile.setState({ enabled: false });
     }
 
   }
   onStart() {
     this.setState({
       tileReset: false
-    })
+    });
+    this.onTileSelect(7);
   }
   onReset() {
     this.setState({
@@ -85,7 +87,7 @@ class AppComponent extends React.Component {
   render() {
     let tileList = []
     for (let i = 1; i <= 9; i++) {
-      let tile = <Tile onTileSelect={this.onTileSelect.bind(this)} tileReset={this.state.tileReset} id={i} key={i}/>;
+      let tile = <Tile onTileSelect={this.onTileSelect.bind(this)} tileReset={this.state.tileReset} id={i} key={i} xSelected={this.state.xSelected} oSelected={this.state.oSelected} />;
       tileList.push(tile);
     }
 
