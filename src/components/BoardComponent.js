@@ -13,7 +13,8 @@ class AppComponent extends React.Component {
       activePlayer: 'x',
       xSelected: [],
       oSelected: [],
-      winnerMessage: ''
+      winnerMessage: '',
+      disabledTiles: []
     };
 	}
   hasNums(arr, nums) {
@@ -48,23 +49,23 @@ class AppComponent extends React.Component {
 
   }
   onTileSelect(id) {
-    if (!this.state.tileReset && this.state.gameState !== 'done') {
+    if (this.state.gameState !== 'done') {
       let activePlayer = this.state.activePlayer;
       let selectedArr = this.state.activePlayer + 'Selected';
       let newArr = this.state[selectedArr].concat(id);
 
-      // if (tile.state.enabled) {
+      if (this.state.disabledTiles.indexOf(id) === -1) {
         // tile.setState({ [activePlayer]: true});
-        this.setState({ [`${activePlayer}Selected`]: this.state.oSelected.concat(id) })
+        // this.setState({ [`${activePlayer}Selected`]: this.state.oSelected.concat(id) })
         // alternate activePlayer between x and o after select
         this.setState({
           activePlayer : activePlayer == 'x' ? 'o' : 'x',
           [selectedArr]: newArr
         });
         this.checkWinner(newArr, activePlayer.toUpperCase());
-      // }
+      }
 
-      // tile.setState({ enabled: false });
+      this.setState({ disabledTiles: this.state.disabledTiles.concat(id) });
     }
 
   }
@@ -72,7 +73,7 @@ class AppComponent extends React.Component {
     this.setState({
       tileReset: false
     });
-    this.onTileSelect(7);
+    this.ai();
   }
   onReset() {
     this.setState({
@@ -81,13 +82,17 @@ class AppComponent extends React.Component {
       activePlayer: 'x',
       xSelected: [],
       oSelected: [],
-      winnerMessage: ''
+      winnerMessage: '',
+      disabledTiles: []
     });
+  }
+  ai() {
+    this.onTileSelect(3);
   }
   render() {
     let tileList = []
     for (let i = 1; i <= 9; i++) {
-      let tile = <Tile onTileSelect={this.onTileSelect.bind(this)} tileReset={this.state.tileReset} id={i} key={i} xSelected={this.state.xSelected} oSelected={this.state.oSelected} />;
+      let tile = <Tile onTileSelect={this.onTileSelect.bind(this)} tileReset={this.state.tileReset} id={i} key={i} disabled={this.state.disabledTiles.indexOf(i) !== -1} xSelected={this.state.xSelected} oSelected={this.state.oSelected} />;
       tileList.push(tile);
     }
 
