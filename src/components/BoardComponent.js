@@ -99,7 +99,7 @@ class AppComponent extends React.Component {
           <button className="start">Start</button>
         </div>
         <div className="button-container" onClick={this.onReset.bind(this)}>
-          <button className="reset">Reset</button>
+          <button disabled={this.state.tileReset} className="reset">Reset</button>
         </div>
       </div>
     );

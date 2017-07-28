@@ -39,6 +39,11 @@ button {
   border-radius: 3px;
 }
 
+button[disabled] {
+  opacity: .5;
+  cursor: default;
+}
+
 .button.start {
   /*float: left;*/
 }

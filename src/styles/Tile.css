@@ -8,6 +8,10 @@
   margin: -8px -5px 0 0;
 }
 
+.tile-component.reset {
+  opacity: .5;
+}
+
 .x {
   background-image: url('../images/x.svg');
   background-repeat: no-repeat;

@@ -25,7 +25,7 @@ class TileComponent extends React.Component {
     }
   }
   render() {
-    let tileClassNames = classNames('tile-component', {x: this.state.x}, {o: this.state.o});
+    let tileClassNames = classNames('tile-component', {reset: this.props.tileReset} , {x: this.state.x}, {o: this.state.o});
     return <div onClick={this.props.onTileSelect.bind(null, this)} className={tileClassNames}></div>
   }
 }
