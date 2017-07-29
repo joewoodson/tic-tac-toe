@@ -10,7 +10,6 @@ class AppComponent extends React.Component {
 	  this.state = {
       gameState: 'ready',
       tileReset: false,
-      turn: 0,
       activePlayer: 'x',
       xSelected: [],
       oSelected: [],
@@ -57,12 +56,11 @@ class AppComponent extends React.Component {
 
       if (this.state.disabledTiles.indexOf(id) === -1) {
         // tile.setState({ [activePlayer]: true});
-        // this.setState({ [`${activePlayer}Selected`]: this.state.oSelected.concat(id) })
+        this.setState({ [`${activePlayer}Selected`]: this.state[`${activePlayer}Selected`].concat(id) })
         // alternate activePlayer between x and o after select
         this.setState({
           activePlayer : activePlayer == 'x' ? 'o' : 'x',
           [selectedArr]: newArr,
-          turn: this.state.turn + 1
         });
         this.checkWinner(newArr, activePlayer.toUpperCase());
       }
@@ -84,7 +82,6 @@ class AppComponent extends React.Component {
     this.setState({
       gameState: 'ready',
       tileReset: true,
-      turn: 0,
       activePlayer: 'x',
       xSelected: [],
       oSelected: [],
@@ -101,7 +98,7 @@ class AppComponent extends React.Component {
         this.onTileSelect(1);
         break;
       default:
-        this.onTileSelect(3);
+        this.onTileSelect(7);
     }
   }
   render() {
@@ -123,7 +120,6 @@ class AppComponent extends React.Component {
         <div className="button-container" onClick={this.onReset.bind(this)}>
           <button disabled={this.state.tileReset} className="reset">Reset</button>
         </div>
-        <span>{this.state.turn}</span>
       </div>
     );
   }
