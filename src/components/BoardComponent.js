@@ -10,6 +10,7 @@ class AppComponent extends React.Component {
 	  this.state = {
       gameState: 'ready',
       tileReset: false,
+      turn: 0,
       activePlayer: 'x',
       xSelected: [],
       oSelected: [],
@@ -60,12 +61,16 @@ class AppComponent extends React.Component {
         // alternate activePlayer between x and o after select
         this.setState({
           activePlayer : activePlayer == 'x' ? 'o' : 'x',
-          [selectedArr]: newArr
+          [selectedArr]: newArr,
+          turn: this.state.turn + 1
         });
         this.checkWinner(newArr, activePlayer.toUpperCase());
       }
 
-      this.setState({ disabledTiles: this.state.disabledTiles.concat(id) });
+      this.setState({
+        disabledTiles: this.state.disabledTiles.concat(id)
+      });
+
     }
 
   }
@@ -79,6 +84,7 @@ class AppComponent extends React.Component {
     this.setState({
       gameState: 'ready',
       tileReset: true,
+      turn: 0,
       activePlayer: 'x',
       xSelected: [],
       oSelected: [],
@@ -86,13 +92,22 @@ class AppComponent extends React.Component {
       disabledTiles: []
     });
   }
-  ai() {
-    this.onTileSelect(3);
+  ai(playerSelected) {
+    switch (playerSelected) {
+      case 1:
+        this.onTileSelect(5);
+        break;
+      case 2:
+        this.onTileSelect(1);
+        break;
+      default:
+        this.onTileSelect(3);
+    }
   }
   render() {
     let tileList = []
     for (let i = 1; i <= 9; i++) {
-      let tile = <Tile onTileSelect={this.onTileSelect.bind(this)} tileReset={this.state.tileReset} id={i} key={i} disabled={this.state.disabledTiles.indexOf(i) !== -1} xSelected={this.state.xSelected} oSelected={this.state.oSelected} />;
+      let tile = <Tile onTileSelect={this.onTileSelect.bind(this)} tileReset={this.state.tileReset} id={i} key={i} disabled={this.state.disabledTiles.indexOf(i) !== -1} xSelected={this.state.xSelected} oSelected={this.state.oSelected} ai={this.ai.bind(this)} />;
       tileList.push(tile);
     }
 
@@ -108,6 +123,7 @@ class AppComponent extends React.Component {
         <div className="button-container" onClick={this.onReset.bind(this)}>
           <button disabled={this.state.tileReset} className="reset">Reset</button>
         </div>
+        <span>{this.state.turn}</span>
       </div>
     );
   }
