@@ -1,6 +1,7 @@
 require('normalize.css/normalize.css');
 require('styles/Board.css');
 
+import axios from 'axios';
 import React from 'react';
 import Tile from './TileComponent';
 
@@ -48,6 +49,19 @@ class AppComponent extends React.Component {
     }
 
   }
+  getBoardState() {
+    const boardState = [];
+    for (let i = 1; i <= 9; i++) {
+      if (this.state.xSelected.indexOf(i) !== -1) {
+        boardState.push('X');
+      } else if (this.state.oSelected.indexOf(i) !== -1) {
+        boardState.push('O');
+      } else {
+        boardState.push('-');
+      }
+    }
+    return boardState.join('');
+  }
   onTileSelect(id) {
     if (this.state.gameState !== 'done') {
       let activePlayer = this.state.activePlayer;
@@ -60,7 +74,7 @@ class AppComponent extends React.Component {
         // alternate activePlayer between x and o after select
         this.setState({
           activePlayer : activePlayer == 'x' ? 'o' : 'x',
-          [selectedArr]: newArr,
+          [selectedArr]: newArr
         });
         this.checkWinner(newArr, activePlayer.toUpperCase());
       }
@@ -68,9 +82,7 @@ class AppComponent extends React.Component {
       this.setState({
         disabledTiles: this.state.disabledTiles.concat(id)
       });
-
     }
-
   }
   onStart() {
     this.setState({
@@ -89,17 +101,52 @@ class AppComponent extends React.Component {
       disabledTiles: []
     });
   }
-  ai(playerSelected) {
-    switch (playerSelected) {
-      case 1:
-        this.onTileSelect(5);
-        break;
-      case 2:
-        this.onTileSelect(1);
-        break;
-      default:
-        this.onTileSelect(7);
-    }
+  ai() {
+    const url = `http://tttapi.herokuapp.com/api/v1/${this.getBoardState()}/X`;
+    const self = this;
+    axios.get(url)
+      .then(function (response) {
+        self.onTileSelect(response.data.recommendation + 1);
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
+    // let options;
+    // switch (playerSelected) {
+    //   case 3:
+    //     options = [1, 9];
+    //     for (let i = 0; i < options.length; i++) {
+    //       if (this.state.disabledTiles.indexOf(options[i]) === -1) {
+    //         this.onTileSelect(options[i]);
+    //         break;
+    //       }
+    //     }
+    //     break;
+    //   case 4:
+    //     options = [9];
+    //     for (let i = 0; i < options.length; i++) {
+    //       if (this.state.disabledTiles.indexOf(options[i]) === -1) {
+    //         this.onTileSelect(options[i]);
+    //         break;
+    //       }
+    //     }
+    //   case 5:
+    //     options = [8];
+    //     for (let i = 0; i < options.length; i++) {
+    //       if (this.state.disabledTiles.indexOf(options[i]) === -1) {
+    //         this.onTileSelect(options[i]);
+    //         break;
+    //       }
+    //     }
+    //   default:
+    //     options = [7, 3, 9];
+    //     for (let i = 0; i < options.length; i++) {
+    //       if (this.state.disabledTiles.indexOf(options[i]) === -1) {
+    //         this.onTileSelect(options[i]);
+    //         break;
+    //       }
+    //     }
+    // }
   }
   render() {
     let tileList = []
