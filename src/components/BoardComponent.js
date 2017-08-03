@@ -68,17 +68,13 @@ class AppComponent extends React.Component {
       let selectedArr = this.state.activePlayer + 'Selected';
       let newArr = this.state[selectedArr].concat(id);
 
-      if (this.state.disabledTiles.indexOf(id) === -1) {
-        // tile.setState({ [activePlayer]: true});
-        this.setState({ [`${activePlayer}Selected`]: this.state[`${activePlayer}Selected`].concat(id) })
-        // alternate activePlayer between x and o after select
-        this.setState({
-          activePlayer : activePlayer == 'x' ? 'o' : 'x',
-          [selectedArr]: newArr
-        });
-        this.checkWinner(newArr, activePlayer.toUpperCase());
-      }
-
+      this.setState({ [`${activePlayer}Selected`]: this.state[`${activePlayer}Selected`].concat(id) })
+      // alternate activePlayer between x and o after select
+      this.setState({
+        activePlayer : activePlayer == 'x' ? 'o' : 'x',
+        [selectedArr]: newArr
+      });
+      this.checkWinner(newArr, activePlayer.toUpperCase());
       this.setState({
         disabledTiles: this.state.disabledTiles.concat(id)
       });
