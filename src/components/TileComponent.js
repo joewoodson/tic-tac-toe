@@ -26,7 +26,7 @@ class TileComponent extends React.Component {
   }
   render() {
     let tileClassNames = classNames('cylinder tile-component', {reset: this.props.tileReset} , {x: this.props.xSelected.indexOf(this.props.id) !== -1}, {o: this.props.oSelected.indexOf(this.props.id) !== -1});
-    return <div onClick={this.props.disabled ? '' : () => {this.props.onTileSelect(this.props.id); setTimeout(() => this.props.ai(this.props.id), .1)}} className={tileClassNames}><div className="letter"></div></div>
+    return <div onClick={this.props.disabled ? '' : () => {this.props.onTileSelect(this.props.id); setTimeout(() => this.props.ai(this.props.id), .1)}} className={tileClassNames}><div className="letter"></div><div className="connector"></div></div>
   }
 }
 
